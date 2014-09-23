@@ -1,4 +1,4 @@
-fidias-dd
+f i d i a s - d d
 =========
 
-Fidias - Diccionario de Datos
+F i d i a s - Dic de Dats
