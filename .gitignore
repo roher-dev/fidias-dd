@@ -3,9 +3,12 @@ fidias-dd-api/.classpath
 fidias-dd-api/.project
 fidias-dd-api/.settings/org.eclipse.jdt.core.prefs
 fidias-dd-api/.settings/org.eclipse.wst.common.project.facet.core.xml
+fidias-dd-api/target
 fidias-dd-domain/.classpath
 fidias-dd-domain/.settings/org.eclipse.wst.common.component
 fidias-dd-domain/.settings/org.eclipse.wst.common.project.facet.core.xml
+fidias-dd-domain/target
 fidias-dd-front/.classpath
 fidias-dd-front/.project
 fidias-dd-front/.settings/
+fidias-dd-front/target
