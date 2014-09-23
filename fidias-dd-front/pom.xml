@@ -1,0 +1,275 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>fidias-dd-front</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>com.fidias.database.modeler.fidias-dd</groupId>
+		<artifactId>fidias-dd</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<name>fidias-dd-front</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.fidias.database.modeler.fidias-dd</groupId>
+			<artifactId>fidias-dd-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fidias.database.modeler.fidias-dd</groupId>
+			<artifactId>fidias-dd-domain</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		<!-- LogBack dependencies -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.despegar.library</groupId>
+			<artifactId>routing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.despegar.library</groupId>
+			<artifactId>version</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.despegar.library</groupId>
+			<artifactId>logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<!-- APACHE-COMMONS -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+		</dependency>
+		<!-- JETTY -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>servlet-api-2.5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mangofactory</groupId>
+			<artifactId>swagger-springmvc</artifactId>
+		</dependency>
+		<!-- APACHE POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.despegar.deploys</groupId>
+				<artifactId>cloudia-java-plugin</artifactId>
+				<version>0.0.9</version>
+				<executions>
+					<execution>
+						<id>prod</id>
+						<phase>package</phase>
+						<goals>
+							<goal>tar</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.despegar.ankaa.myo.globals.Global</mainClass>
+							<applicationArguments>9290 prod</applicationArguments>
+							<jvmArguments>
+								-XX:MaxTenuringThreshold=15 -XX:SurvivorRatio=8
+								-XX:NewSize=3G -XX:MaxNewSize=3G -Xms5G
+								-Xmx5G
+								-XX:MaxPermSize=384m -XX:+UseConcMarkSweepGC -verbose:gc
+								-XX:+PrintGCTimeStamps -Xloggc:./logs/garbageCollector.log
+								-XX:+PrintGCDateStamps -XX:+CMSClassUnloadingEnabled
+								-XX:+CMSPermGenSweepingEnabled -Duser.timezone=GMT
+							</jvmArguments>
+							<environment>prod</environment>
+							<newrelicName>cfa-myo</newrelicName>
+							<newrelicKey>d474d9a3f38e23d7436ba6130403cc8245d0cb37</newrelicKey>
+							<healthCheckURI>/cfa-myo/service/version</healthCheckURI>
+							<healthCheckTimeout>240</healthCheckTimeout>
+						</configuration>
+					</execution>
+					<execution>
+						<id>beta</id>
+						<phase>package</phase>
+						<goals>
+							<goal>tar</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.despegar.ankaa.myo.globals.Global</mainClass>
+							<applicationArguments>9290 beta</applicationArguments>
+							<jvmArguments>-XX:MaxTenuringThreshold=15 -XX:SurvivorRatio=8
+								-XX:NewSize=1G -XX:MaxNewSize=1G -Xms3G -Xmx3G
+								-XX:MaxPermSize=384m -XX:+UseConcMarkSweepGC -verbose:gc
+								-XX:+PrintGCTimeStamps -Xloggc:./logs/garbageCollector.log
+								-XX:+PrintGCDateStamps -XX:+CMSClassUnloadingEnabled
+								-XX:+CMSPermGenSweepingEnabled -Duser.timezone=GMT</jvmArguments>
+							<environment>beta</environment>
+							<newrelicName>cfa-myo-beta</newrelicName>
+							<newrelicKey>f3d7c40606dba94c83eb5bc93232a1ea8afaeb4d</newrelicKey>
+							<healthCheckURI>/cfa-myo-beta/service/version</healthCheckURI>
+							<healthCheckTimeout>240</healthCheckTimeout>
+						</configuration>
+					</execution>
+					<execution>
+						<id>rc</id>
+						<phase>package</phase>
+						<goals>
+							<goal>tar</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.despegar.ankaa.myo.globals.Global</mainClass>
+							<applicationArguments>9290 rc</applicationArguments>
+							<jvmArguments>-XX:MaxTenuringThreshold=15 -XX:SurvivorRatio=8
+								-XX:NewSize=1G -XX:MaxNewSize=1G -Xms3G -Xmx3G
+								-XX:MaxPermSize=384m -XX:+UseConcMarkSweepGC -verbose:gc
+								-XX:+PrintGCTimeStamps -Xloggc:./logs/garbageCollector.log
+								-XX:+PrintGCDateStamps -XX:+CMSClassUnloadingEnabled
+								-XX:+CMSPermGenSweepingEnabled -Duser.timezone=GMT</jvmArguments>
+							<environment>rc</environment>
+							<newrelicName>cfa-myo-rc</newrelicName>
+							<newrelicKey>f3d7c40606dba94c83eb5bc93232a1ea8afaeb4d</newrelicKey>
+							<healthCheckURI>/cfa-myo-rc/service/version</healthCheckURI>
+							<healthCheckTimeout>240</healthCheckTimeout>
+						</configuration>
+					</execution>
+					<execution>
+						<id>bkp</id>
+						<phase>package</phase>
+						<goals>
+							<goal>tar</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.despegar.ankaa.myo.globals.Global</mainClass>
+							<applicationArguments>9290 bkp</applicationArguments>
+							<jvmArguments>-XX:MaxTenuringThreshold=15 -XX:SurvivorRatio=8
+								-XX:NewSize=1G -XX:MaxNewSize=1G -Xms3G -Xmx3G
+								-XX:MaxPermSize=384m -XX:+UseConcMarkSweepGC -verbose:gc
+								-XX:+PrintGCTimeStamps -Xloggc:./logs/garbageCollector.log
+								-XX:+PrintGCDateStamps -XX:+CMSClassUnloadingEnabled
+								-XX:+CMSPermGenSweepingEnabled -Duser.timezone=GMT</jvmArguments>
+							<environment>bkp</environment>
+							<newrelicName>cfa-myo-bkp</newrelicName>
+							<newrelicKey>f3d7c40606dba94c83eb5bc93232a1ea8afaeb4d</newrelicKey>
+							<healthCheckURI>/cfa-myo-bkp/service/version</healthCheckURI>
+							<healthCheckTimeout>240</healthCheckTimeout>
+						</configuration>
+					</execution>
+					<execution>
+						<id>ic</id>
+						<phase>package</phase>
+						<goals>
+							<goal>tar</goal>
+						</goals>
+						<configuration>
+							<mainClass>com.despegar.ankaa.myo.globals.Global</mainClass>
+							<applicationArguments>9290</applicationArguments>
+							<jvmArguments>
+								-Dnewrelic.environment=despdevcro
+								-Duser.timezone=GMT
+							</jvmArguments>
+							<environment>ic</environment>
+							<newrelicName>cfa-myo</newrelicName>
+							<newrelicKey>1957fbd5dedf4741df48e1f2bc4eed1b60d2d686</newrelicKey>
+							<healthCheckURI>/cfa-myo/service/version</healthCheckURI>
+							<healthCheckTimeout>240</healthCheckTimeout>
+							<!-- <suspendURI>/cfa-myo/manage/suspend/OIWEOIWEUROWIAAAAA/CloudDeploy</suspendURI> -->
+							<!-- <resumeURI>/cfa-myo/manage/resume/OIWEOIWEUROWIAAAAA</resumeURI> -->
+							<!-- <statusURI>/cfa-myo/manage/status</statusURI> -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
