@@ -1,3 +1,3 @@
 <#include "template/header.ftl">
-FIDIAS DD CONTAINER
+<#include "index/body.ftl">
 <#include "template/footer.ftl">

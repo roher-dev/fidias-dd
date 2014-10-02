@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- Default Main Template -->
+    <definition name="mainTemplate" template="/WEB-INF/pages/template/mainTemplate.jsp">
+        <put-attribute name="navbar" value="/WEB-INF/pages/template/navbar.jsp" />
+    </definition>
+	<!-- Left-Menu Template -->
+    <definition name="left-menu-template" template="/WEB-INF/pages/template/leftMenuTemplate.jsp">
+        <put-attribute name="navbar" value="/WEB-INF/pages/template/navbar.jsp" />
+        <put-attribute name="left-menu" value="/WEB-INF/pages/template/leftMenu.jsp" />
+    </definition>
+	<!-- PLain Views -->    
+    <definition name="index2" extends="mainTemplate">
+    	<put-attribute name="title" value="Fidias DD HomePage" />
+        <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+    
+    <definition name="index" extends="left-menu-template">
+    	<put-attribute name="title" value="Fidias DD HomePage" />
+        <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+    
+</tiles-definitions>

@@ -1,27 +1,29 @@
 <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-    	  <ul class="nav navbar-nav pull-right">
-        	<li id="index"><a href="${contextPath}/html/index">Home</a></li>
-        	<!--<li id="source"><a href="${contextPath}/html/source/upload">Carga Masiva</a></li>-->
-          </ul>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Fidias-DD</a>
-        </div>
-        <div id="login-info-container" class="">
-		    <div class="collapse navbar-collapse navbar-right" id="myo-enavbar-collapse">
-		      <p class="navbar-text"><i class="glyphicon glyphicon-user" ></i> <span id="username-span-value" class="welcome"></span> | <a href="${contextPath}/logout" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove-circle">&nbsp;Logout</i></a>
-		    </div><!-- /.navbar-collapse -->
-		</div>
-      </div>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="${contextPath}/html/index">Fidias DD</a>
     </div>
-    
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input type="text" class="form-control" placeholder="Search...">
+      </form>
+    </div>
+  </div>
+</div>
+
     <script>
 	    function getParameterByName(name) {
 		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

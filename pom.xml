@@ -12,6 +12,7 @@
 		<module>fidias-dd-api</module>
        	 	<module>fidias-dd-domain</module>
 		<module>fidias-dd-front</module>
+		<module>fidias-dd-front-tomcat</module>
     	</modules>
     	<properties>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
