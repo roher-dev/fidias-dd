@@ -170,17 +170,17 @@
 						var counter = 0;
  	        			var project = elem;
  	        			
- 	        			var td1 = $("<td></td>").append(project.name);
  	        			
  	        			$.each(project.tables, function(idx, elem){
  	        				
  	        				var table = elem;
-	 	        			var td2 = $("<td></td>").append(table.name);
  	        				
 	 	        			$.each(table.columns, function(idx, elem){
 	 	        				
 	 	        				var column = elem;
 	 	        				
+	 	        				var td1 = $("<td></td>").append(project.name);
+		 	        			var td2 = $("<td></td>").append(table.name);
 		 	        			var td3 = $("<td></td>").append(column.name);
 		 	        			var td4 = $("<td></td>").append(column.type);
 		 	        			var td5 = $("<td></td>").append(column.size);
@@ -195,7 +195,8 @@
 									clazz = "success";
 								}
 		 	        			var tr = $("<tr class=\"" + clazz + "\"></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8).append(td9).append(td10);
-								tbody.append(tr); 	        			
+								tbody.append(tr); 	
+								console.log(tr.html());
 		 	        			counter++;
 	 	        				return;
 	 	        			})
