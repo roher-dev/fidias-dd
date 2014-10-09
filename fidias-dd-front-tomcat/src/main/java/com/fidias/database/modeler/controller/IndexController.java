@@ -2,12 +2,12 @@ package com.fidias.database.modeler.controller;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +25,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fidias.database.modeler.api.dto.FileMeta;
 import com.fidias.database.modeler.api.dto.FilesDto;
+import com.fidias.database.modeler.service.ProjectService;
+import com.fidias.database.modeler.xml.element.ProjectElement;
+import com.fidias.database.modeler.xml.processor.ProjectXmlProcessor;
 import com.google.common.collect.Lists;
 
 @Controller
@@ -32,6 +35,11 @@ import com.google.common.collect.Lists;
 public class IndexController extends ExceptionHandlingController {
 
 	private static final Logger LOGGER = getLogger(IndexController.class);
+	
+	@Inject
+	private ProjectXmlProcessor projectXmlProcessor;
+	@Inject
+	private ProjectService projectService;
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
@@ -59,6 +67,7 @@ public class IndexController extends ExceptionHandlingController {
 	
 	@RequestMapping(value="/upload2", method = RequestMethod.POST)
     public @ResponseBody LinkedList<FileMeta> upload2(MultipartHttpServletRequest request, HttpServletResponse response) {
+		LOGGER.debug("uploading...");
 		LinkedList<FileMeta> files = new LinkedList<FileMeta>();
 	    FileMeta fileMeta = null;
         //1. build an iterator
@@ -70,7 +79,7 @@ public class IndexController extends ExceptionHandlingController {
  
              //2.1 get next MultipartFile
              mpf = request.getFile(itr.next()); 
-             System.out.println(mpf.getOriginalFilename() +" uploaded! "+files.size());
+             LOGGER.debug(mpf.getOriginalFilename() +" uploaded! "+files.size());
  
              //2.2 if files > 10 remove the first from the list
              if(files.size() >= 10)
@@ -86,11 +95,15 @@ public class IndexController extends ExceptionHandlingController {
                 fileMeta.setBytes(mpf.getBytes());
  
                  // copy file to local disk (make sure the path "e.g. D:/temp/files" exists)            
-                 FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("D:/temp/files/"+mpf.getOriginalFilename()));
- 
+//                 FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("D:/temp/files/" + mpf.getOriginalFilename()));
+                ProjectElement projectElement = this.projectXmlProcessor.process(mpf.getInputStream());
+                if(projectElement != null){
+                	this.projectService.insert(projectElement);
+                } else {
+                	throw new RuntimeException("an error has ocurred when it tried to parse the file ...");
+                }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            	throw new RuntimeException(e);
             }
              //2.4 add to files
              files.add(fileMeta);
