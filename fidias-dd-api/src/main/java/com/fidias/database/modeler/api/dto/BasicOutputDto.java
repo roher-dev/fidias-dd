@@ -2,7 +2,6 @@ package com.fidias.database.modeler.api.dto;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 public class BasicOutputDto extends BasicDto {
@@ -19,7 +18,6 @@ public class BasicOutputDto extends BasicDto {
 		private Integer id;
 		
 		private BasicOutputType(int id) {
-			Preconditions.checkArgument(id > 0, "id cannot be unless 0");
 			this.id = id;
 		}
 		

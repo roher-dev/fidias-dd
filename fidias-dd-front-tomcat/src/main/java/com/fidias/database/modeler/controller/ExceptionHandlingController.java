@@ -38,7 +38,7 @@ public abstract class ExceptionHandlingController {
 						+ exception.getMessage(), exception);
 
 		BasicOutputDto dto = new BasicOutputDto(BasicOutputType.UNHANDLED_ERROR.getId());
-		dto.setMessage("An unhandled error has ocurred on MYO.");
+		dto.setMessage("An unhandled error has ocurred on FIDIAS DD.");
 		dto.addCause(exception.getMessage());
 
 		return dto;
@@ -53,7 +53,7 @@ public abstract class ExceptionHandlingController {
 						+ exception.getMessage(), exception);
 
 		BasicOutputDto dto = new BasicOutputDto(BasicOutputType.UNHANDLED_ERROR.getId());
-		dto.setMessage("An unhandled error has ocurred on MYO.");
+		dto.setMessage("An unhandled error has ocurred on FIDIAS DD.");
 		dto.addCause(exception.getMessage());
 
 		return dto;
@@ -71,7 +71,7 @@ public abstract class ExceptionHandlingController {
 						+ ce.getSQLException().getMessage(), exception);
 
 		BasicOutputDto dto = new BasicOutputDto(BasicOutputType.SQL_CONSTRAINT_ERROR.getId());
-		dto.setMessage(String.format("An unhandled constraint violation error has ocurred on MYO. SQLState: %s", 
+		dto.setMessage(String.format("An unhandled constraint violation error has ocurred on FIDIAS DD. SQLState: %s", 
 				ce.getSQLState()));
 		dto.addCause(ce.getSQLException().getMessage());
 
