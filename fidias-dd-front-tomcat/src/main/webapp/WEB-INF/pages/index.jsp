@@ -96,131 +96,24 @@
             </ul>
         </div>
     </div>
-     <h2 class="sub-header">Section title</h2>
+     <h2 class="sub-header">Resultado de la b&uacute;squeda</h2>
      <div class="table-responsive">
-       <table class="table table-striped">
+       <table id="projects-table-result" class="table table-bordered">
          <thead>
-           <tr>
-             <th>#</th>
-             <th>Header</th>
-             <th>Header</th>
-             <th>Header</th>
-             <th>Header</th>
+           <tr class="danger">
+             <th>Project-Name</th>
+             <th>Table-Name</th>
+             <th>Column-Name</th>
+             <th>Type</th>
+             <th>Size</th>
+             <th>Unique</th>
+             <th>Null</th>
+             <th>Pk</th>
+             <th>Fk</th>
+             <th>Description</th>
            </tr>
          </thead>
          <tbody>
-           <tr>
-             <td>1,001</td>
-             <td>Lorem</td>
-             <td>ipsum</td>
-             <td>dolor</td>
-             <td>sit</td>
-           </tr>
-           <tr>
-             <td>1,002</td>
-             <td>amet</td>
-             <td>consectetur</td>
-             <td>adipiscing</td>
-             <td>elit</td>
-           </tr>
-           <tr>
-             <td>1,003</td>
-             <td>Integer</td>
-             <td>nec</td>
-             <td>odio</td>
-             <td>Praesent</td>
-           </tr>
-           <tr>
-             <td>1,003</td>
-             <td>libero</td>
-             <td>Sed</td>
-             <td>cursus</td>
-             <td>ante</td>
-           </tr>
-           <tr>
-             <td>1,004</td>
-             <td>dapibus</td>
-             <td>diam</td>
-             <td>Sed</td>
-             <td>nisi</td>
-           </tr>
-           <tr>
-             <td>1,005</td>
-             <td>Nulla</td>
-             <td>quis</td>
-             <td>sem</td>
-             <td>at</td>
-           </tr>
-           <tr>
-             <td>1,006</td>
-             <td>nibh</td>
-             <td>elementum</td>
-             <td>imperdiet</td>
-             <td>Duis</td>
-           </tr>
-           <tr>
-             <td>1,007</td>
-             <td>sagittis</td>
-             <td>ipsum</td>
-             <td>Praesent</td>
-             <td>mauris</td>
-           </tr>
-           <tr>
-             <td>1,008</td>
-             <td>Fusce</td>
-             <td>nec</td>
-             <td>tellus</td>
-             <td>sed</td>
-           </tr>
-           <tr>
-             <td>1,009</td>
-             <td>augue</td>
-             <td>semper</td>
-             <td>porta</td>
-             <td>Mauris</td>
-           </tr>
-           <tr>
-             <td>1,010</td>
-             <td>massa</td>
-             <td>Vestibulum</td>
-             <td>lacinia</td>
-             <td>arcu</td>
-           </tr>
-           <tr>
-             <td>1,011</td>
-             <td>eget</td>
-             <td>nulla</td>
-             <td>Class</td>
-             <td>aptent</td>
-           </tr>
-           <tr>
-             <td>1,012</td>
-             <td>taciti</td>
-             <td>sociosqu</td>
-             <td>ad</td>
-             <td>litora</td>
-           </tr>
-           <tr>
-             <td>1,013</td>
-             <td>torquent</td>
-             <td>per</td>
-             <td>conubia</td>
-             <td>nostra</td>
-           </tr>
-           <tr>
-             <td>1,014</td>
-             <td>per</td>
-             <td>inceptos</td>
-             <td>himenaeos</td>
-             <td>Curabitur</td>
-           </tr>
-           <tr>
-             <td>1,015</td>
-             <td>sodales</td>
-             <td>ligula</td>
-             <td>in</td>
-             <td>libero</td>
-           </tr>
          </tbody>
        </table>
      </div>
@@ -254,7 +147,70 @@
 	 
 	        dropZone: $('#dropzone')
 	    });
+	    
+	    searchAllProjects();
+	    
+	    return;
 	});
+ 
+ 	searchAllProjects = function(){
+ 		$.ajax({ // ajax call starts
+			url: '${pageContext.request.contextPath}/controller/projects', // JQuery loads serverside.php
+ 	        dataType: 'json', // Choosing a JSON datatype
+ 	        success: function(data){
+ 	        	var tr = $("#projects-table-result > tbody > tr");
+				if(tr.size() > 0){
+					
+					tr.remove();
+				}
+ 	        	var tbody = $("#projects-table-result > tbody");
+ 	        	
+ 	        	if(data.length > 0){
+ 	        		$.each(data, function(idx, elem){
+						var counter = 0;
+ 	        			var project = elem;
+ 	        			
+ 	        			var td1 = $("<td></td>").append(project.name);
+ 	        			
+ 	        			$.each(project.tables, function(idx, elem){
+ 	        				
+ 	        				var table = elem;
+	 	        			var td2 = $("<td></td>").append(table.name);
+ 	        				
+	 	        			$.each(table.columns, function(idx, elem){
+	 	        				
+	 	        				var column = elem;
+	 	        				
+		 	        			var td3 = $("<td></td>").append(column.name);
+		 	        			var td4 = $("<td></td>").append(column.type);
+		 	        			var td5 = $("<td></td>").append(column.size);
+		 	        			var td6 = $("<td></td>").append(column.unique);
+		 	        			var td7 = $("<td></td>").append(column.nullable);
+		 	        			var td8 = $("<td></td>").append(column.pk);
+		 	        			var td9 = $("<td></td>").append(column.fk);
+		 	        			var td10 = $("<td></td>").append(column.description);
+								//console.log(td1.html());
+								var clazz = ""
+								if(counter%2 != 0){
+									clazz = "success";
+								}
+		 	        			var tr = $("<tr class=\"" + clazz + "\"></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8).append(td9).append(td10);
+								tbody.append(tr); 	        			
+		 	        			counter++;
+	 	        				return;
+	 	        			})
+ 	        				return;
+ 	        			})
+ 	        			return;
+ 	        		});
+ 	        	}
+				
+ 	            return;
+ 	        }
+ 	    });
+ 		
+ 		return;
+ 	}
  
  
  

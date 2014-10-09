@@ -9,26 +9,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fidias.database.modeler.api.dto.FileMeta;
-import com.fidias.database.modeler.api.dto.FilesDto;
+import com.fidias.database.modeler.api.dto.ProjectDto;
 import com.fidias.database.modeler.service.ProjectService;
 import com.fidias.database.modeler.xml.element.ProjectElement;
 import com.fidias.database.modeler.xml.processor.ProjectXmlProcessor;
-import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping
@@ -43,9 +39,20 @@ public class IndexController extends ExceptionHandlingController {
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
+		
         return "index";
     }
 	
+	@RequestMapping(value = "/projects", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<ProjectDto> getAllProjects(HttpServletResponse response){
+		List<ProjectDto> projects = this.projectService.searchAll();
+		
+		response.setStatus(HttpServletResponse.SC_OK);
+		
+		return projects;
+	}
+	
+	/*
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody List<FilesDto> upload(@RequestParam(value = "files[]", required = false) MultipartFile[] files,
 			HttpSession session){
@@ -64,7 +71,7 @@ public class IndexController extends ExceptionHandlingController {
 		
 		return res;
     }
-	
+	*/
 	@RequestMapping(value="/upload2", method = RequestMethod.POST)
     public @ResponseBody LinkedList<FileMeta> upload2(MultipartHttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("uploading...");
