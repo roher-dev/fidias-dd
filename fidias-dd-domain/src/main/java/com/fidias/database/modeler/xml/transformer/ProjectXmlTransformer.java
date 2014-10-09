@@ -25,24 +25,28 @@ public class ProjectXmlTransformer {
 	public Project transform(ProjectElement p){
 		Project r = new Project();
 		r.setName(p.getDbName());
-		for(TableElement t : p.getTables().getTableElements()){
-			ProjectTable pt = new ProjectTable();
-			pt.setName(t.getName());
-			for(ColumnElement c : t.getColumns().getColumns()){
-				ColumnTable ct = new ColumnTable();
-				ct.setDescription(c.getDescription());
-				ct.setFk(this.siNoToBoolean(c.getFk()));
-				ct.setName(c.getName());
-				ct.setNullable(this.siNoToBoolean(c.getNullable()));
-				ct.setPk(this.siNoToBoolean(c.getPk()));
-				ct.setSize(c.getSize());
-				ct.setType(c.getType());
-				ct.setUnique(this.siNoToBoolean(c.getUnique()));
-				ct.setProjectTable(pt);
-				pt.addColumn(ct);
+		if(p.getTables() != null){
+			for(TableElement t : p.getTables().getTableElements()){
+				ProjectTable pt = new ProjectTable();
+				pt.setName(t.getName());
+				if(t.getColumns() != null){
+					for(ColumnElement c : t.getColumns().getColumns()){
+						ColumnTable ct = new ColumnTable();
+						ct.setDescription(c.getDescription());
+						ct.setFk(this.siNoToBoolean(c.getFk()));
+						ct.setName(c.getName());
+						ct.setNullable(this.siNoToBoolean(c.getNullable()));
+						ct.setPk(this.siNoToBoolean(c.getPk()));
+						ct.setSize(c.getSize());
+						ct.setType(c.getType());
+						ct.setUnique(this.siNoToBoolean(c.getUnique()));
+						ct.setProjectTable(pt);
+						pt.addColumn(ct);
+					}
+				}
+				pt.setProject(r);
+				r.addTable(pt);
 			}
-			pt.setProject(r);
-			r.addTable(pt);
 		}
 		
 		return r;

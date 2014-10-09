@@ -49,8 +49,8 @@
 			    <div id="progress" class="progress">
 				        <div class="progress-bar progress-bar-success"></div>
 				    </div>
-			 
-			    <table id="uploaded-files">
+			 <div class="table-responsive">
+			    <table id="uploaded-files" class="table table-striped">
 			        <tr>
 			            <th>File Name</th>
 			            <th>File Size</th>
@@ -58,7 +58,7 @@
 			            <th>Download</th>
 			        </tr>
 			    </table>
-		        
+		     </div>
 		        
 		        <!--
 			        <form action="${pageContext.request.contextPath}/upload.html" method="POST" enctype="multipart/form-data">

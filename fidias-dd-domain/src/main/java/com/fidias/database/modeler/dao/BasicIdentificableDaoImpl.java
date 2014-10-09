@@ -1,8 +1,8 @@
 package com.fidias.database.modeler.dao;
 
-import com.fidias.database.modeler.model.Identificable;
+import com.fidias.database.modeler.model.Identifiable;
 
-public abstract class BasicIdentificableDaoImpl<E extends Identificable> extends BasicDaoImpl<E> 
+public abstract class BasicIdentificableDaoImpl<E extends Identifiable> extends BasicDaoImpl<E> 
 	implements BasicIdentificableDao<E> {
 
 	@SuppressWarnings("unchecked")

@@ -8,7 +8,7 @@
 			</pattern>
 		</encoder>
 	</appender>
-	<logger name="com.despegar.ankaa.myo" level="DEBUG" additivity="false">
+	<logger name="com.fidias.database.modeler" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
     

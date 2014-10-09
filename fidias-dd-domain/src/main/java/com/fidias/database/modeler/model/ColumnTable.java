@@ -1,14 +1,13 @@
 package com.fidias.database.modeler.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "COLUMN_TABLE")
-public class ColumnTable extends Auditable {
+public class ColumnTable extends Identifiable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,17 +17,18 @@ public class ColumnTable extends Auditable {
 	private String type;
 	@Column(name = "SIZE")
 	private int size;
-	@Column(name = "UNIQUE")
+	@Column(name = "IS_UNIQUE", nullable = false)
 	private boolean unique;
-	@Column(name = "NULLABLE")
+	@Column(name = "IS_NULLABLE", nullable = false)
 	private boolean nullable;
-	@Column(name = "PK")
+	@Column(name = "IS_PK", nullable = false)
 	private boolean pk;
-	@Column(name = "FK")
+	@Column(name = "IS_FK", nullable = false)
 	private boolean fk;
 	@Column(name = "DESCRIPTION", length = 200)
 	private String description;
-	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	/*@ManyToOne(cascade = CascadeType.ALL, optional = false)*/
+	@Transient
 	private ProjectTable projectTable;
 	
 	public ColumnTable() {

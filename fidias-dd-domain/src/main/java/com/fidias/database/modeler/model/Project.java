@@ -12,12 +12,12 @@ import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "PROJECT")
-public class Project extends Identificable {
+public class Project extends Identifiable {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "NAME", length = 100)
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ProjectTable> tables = Lists.newArrayList();
 	
 	public Project() {

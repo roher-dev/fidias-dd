@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Identificable extends Auditable {
+public abstract class Identifiable extends Auditable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -16,11 +16,11 @@ public abstract class Identificable extends Auditable {
 	@Column(name = "ID", unique = true, nullable = false)
 	private Long id;
 
-	public Identificable() {
+	public Identifiable() {
 		super();
 	}
 
-	public Identificable(String createdBy) {
+	public Identifiable(String createdBy) {
 		super(createdBy);
 	}
 

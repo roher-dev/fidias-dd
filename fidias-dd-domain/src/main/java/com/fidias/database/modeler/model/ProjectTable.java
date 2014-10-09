@@ -5,22 +5,23 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "PROJECT_TABLE")
-public class ProjectTable extends Auditable {
+public class ProjectTable extends Identifiable {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "NAME", length = 100)
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "projectTable")
+	@OneToMany(cascade = CascadeType.ALL/*, mappedBy = "projectTable"*/)
 	private List<ColumnTable> columns = Lists.newArrayList();
-	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	/*@ManyToOne(cascade = CascadeType.ALL, optional = false)*/
+	@Transient
 	private Project project;
 
 	public ProjectTable() {
