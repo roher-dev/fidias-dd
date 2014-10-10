@@ -30,7 +30,7 @@
    <div class="col-md-10 col-md-offset-2 main">
 	     	<div class="panel panel-default">
 		     	<div class="panel-heading">
-		            <a id="info-upload" href="#" onclick="javascript:showInfoUpload(this);"><i class="fa fa-info-circle fa-3 pull-right"></i></a>
+		            <a id="aInfoUpload" href="#"><i class="fa fa-info-circle fa-3 pull-right"></i></a>
 		            <h3 class="panel-title">Upload File</h3>
 		        </div>
 		        <div class="panel-body">
@@ -50,7 +50,7 @@
 			    <div id="progress" class="progress">
 				        <div class="progress-bar progress-bar-success"></div>
 				    </div>
-			 <div class="table-responsive">
+			 <div id="tableFiles" class="table-responsive">
 			    <table id="uploaded-files" class="table table-striped">
 			        <tr>
 			            <th>File Name</th>
@@ -83,20 +83,21 @@
 		        
 				 
 		        </div>
+		        <div id="infoUpload" class="panel panel-default" style="position:absolute;top:4%;left:35%;z-index:10000;">
+			        <div class="panel-heading">
+			            <h3 class="panel-title">Notes</h3>
+			        </div>
+			        <div class="panel-body">
+			            <ul>
+			                <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
+			                <li>Only extensible markup files (<strong>XML</strong>) are allowed in this application.</li>
+			                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
+			            </ul>
+			        </div>
+			    </div>
 	    </div>   
 	         
-	<div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Notes</h3>
-        </div>
-        <div class="panel-body">
-            <ul>
-                <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-                <li>Only extensible markup files (<strong>XML</strong>) are allowed in this application.</li>
-                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
-            </ul>
-        </div>
-    </div>
+	
      <h2 class="sub-header">Search's Results</h2>
      <div class="table-responsive">
        <table id="projects-table-result" class="table table-bordered">
@@ -121,6 +122,8 @@
    </div>
  <script>
  $(function () {
+	 $("#tableFiles").hide();
+	 $("#infoUpload").hide();
 	    $('#fileupload').fileupload({
 	        dataType: 'json',
 	 
@@ -139,6 +142,7 @@
 	            
 	            searchAllProjects();
 	            drawTreeView();
+	            $("#tableFiles").show();
 	        },
 	 
 	        progressall: function (e, data) {
@@ -154,8 +158,33 @@
 	    
 	    searchAllProjects();
 	    
+	    
+	    
+	    $("#aInfoUpload").click(
+	    	function(){
+	    		if(clicked){
+	    			clicked = false;
+	    			$("#infoUpload").hide();
+	    		} else {
+		    		clicked = true;
+		    		$("#infoUpload").show();
+	    			
+	    		}
+	    		
+	    		return;
+	    	}		
+	    )/*.mouseout(
+	    	function(){
+	    		$("#infoUpload").hide();
+	    		
+	    		return;
+	    	}		
+	    )*/;
+	    
 	    return;
 	});
+ 
+ var clicked = false;
  
  	createCheckedIcon = function(input, centered){
  		var icon = "glyphicon glyphicon-unchecked";
@@ -227,10 +256,6 @@
  	    });
  		
  		return;
- 	}
- 
- 	showInfoUpload = function(elemento){
- 		//$(this)
  	}
  
  </script>
