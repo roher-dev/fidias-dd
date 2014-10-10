@@ -20,8 +20,8 @@
   </ul>
 </div>
 -->
-<div class="col-sm-3 col-md-2 sidebar">
-	<div id="jstree-div">
+<div class="col-md-2 sidebar" style="overflow:scroll;">
+	<div id="jstree-div" class="hide">
 		<ul>
 			<li data-jstree='{"icon":"fa fa-database"}'>schema01
 				<ul>
@@ -94,54 +94,63 @@
  	        	}
  	        	if(data.length > 0){
 	 	        	
+	 	        	var ulGral = $("<ul></ul>");
+	 	        	
 	 	        	$.each(data, function(idx, elem){
 						var counter = 0;
  	        			var project = elem;
+	 	        		
+ 	        			var liProj = $("<li data-jstree='{\"icon\":\"fa fa-database\"}'>" + project.name + "</li>");
  	        			
  	        			$.each(project.tables, function(idx, elem){
  	        				
  	        				var table = elem;
  	        				
+ 	        				var ulTable = $("<ul></ul>");
+ 	        				
+	 	        			var liTable = $("<li data-jstree='{\"icon\":\"fa fa-cubes\"}'>" + table.name + "</li>");
+	 	        			
 	 	        			$.each(table.columns, function(idx, elem){
 	 	        				
 	 	        				var column = elem;
 	 	        		
-	 	        				var ulGral = $("<ul></ul>");
-	 	        				
-	 	        				var liProj = $("<li data-jstree='{\"icon\":\"fa fa-database\"}'>" + project.name + "</li>");
-	 	        				
-	 	        				var ulTable = $("<ul></ul>");
-	 	        				
-	 	        				var liTable = $("<li data-jstree='{\"icon\":\"fa fa-cubes\"}'>" + table.name + "</li>")
-	 	        				
 	 	        				var ulColumn = $("<ul></ul>");
 	 	        				
 	 	        				var li1 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.name);
-		 	        			var li2 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.type);
+		 	        			/*
+	 	        				var li2 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.type);
 		 	        			var li3 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.size);
 		 	        			var li4 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.unique);
 		 	        			var li5 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.nullable);
 		 	        			var li6 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.pk);
 		 	        			var li7 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.fk);
 		 	        			var li8 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.description);
-	 	        				
-		 	        			ulColumn.append(li1).append(li2).append(li3).append(li4).append(li5).append(li6).append(li7)
-		 	        				.append(li8);
+	 	        				*/
+		 	        			ulColumn.append(li1)/*.append(li2).append(li3).append(li4).append(li5).append(li6).append(li7)
+		 	        				.append(li8)*/;
+		 	        			
 		 	        			liTable.append(ulColumn);
-		 	        			ulTable.append(liTable);
-	 	        				liProj.append(ulTable);
-	 	        				ulGral.append(liProj);
 	 	        				
-	 	        				var treeDiv = $("#jstree-div").append(ulGral);
-
 	 	        				return;
 	 	        			})
+	 	        			
+	 	        			ulTable.append(liTable);
+	 	        			
+	 	        			liProj.append(ulTable);
+	 	        			
  	        				return;
  	        			})
+ 	        			
+		 	        	ulGral.append(liProj);
+ 	        			
  	        			return;
  	        		});
+	       			
+ 	        		var treeDiv = $("#jstree-div").append(ulGral);
 	 	        	
 	 	        	initTreeView();
+	 	        	
+	 	        	treeDiv.removeClass("hide");
  	        	}
 				
  	            return;

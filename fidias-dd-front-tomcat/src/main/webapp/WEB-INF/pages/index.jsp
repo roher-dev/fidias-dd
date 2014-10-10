@@ -27,9 +27,10 @@
 </style>
 
 
-   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+   <div class="col-md-10 col-md-offset-2 main">
 	     	<div class="panel panel-default">
 		     	<div class="panel-heading">
+		            <a id="info-upload" href="#" onclick="javascript:showInfoUpload(this);"><i class="fa fa-info-circle fa-3 pull-right"></i></a>
 		            <h3 class="panel-title">Upload File</h3>
 		        </div>
 		        <div class="panel-body">
@@ -55,7 +56,7 @@
 			            <th>File Name</th>
 			            <th>File Size</th>
 			            <th>File Type</th>
-			            <th>Download</th>
+			            <!-- <th>Download</th> -->
 			        </tr>
 			    </table>
 		     </div>
@@ -96,21 +97,21 @@
             </ul>
         </div>
     </div>
-     <h2 class="sub-header">Resultado de la b&uacute;squeda</h2>
+     <h2 class="sub-header">Search's Results</h2>
      <div class="table-responsive">
        <table id="projects-table-result" class="table table-bordered">
          <thead>
-           <tr class="danger">
-             <th>Project-Name</th>
-             <th>Table-Name</th>
-             <th>Column-Name</th>
-             <th>Type</th>
-             <th>Size</th>
-             <th>Unique</th>
-             <th>Null</th>
-             <th>Pk</th>
-             <th>Fk</th>
-             <th>Description</th>
+           <tr class="active">
+             <th style="text-align:center;vertical-align:middle;">Project-Name</th>
+             <th style="text-align:center;vertical-align:middle;">Table-Name</th>
+             <th style="text-align:center;vertical-align:middle;">Column-Name</th>
+             <th style="text-align:center;vertical-align:middle;">Type</th>
+             <th style="text-align:center;vertical-align:middle;">Size</th>
+             <th style="text-align:center;vertical-align:middle;">Unique</th>
+             <th style="text-align:center;vertical-align:middle;">Null</th>
+             <th style="text-align:center;vertical-align:middle;">Pk</th>
+             <th style="text-align:center;vertical-align:middle;">Fk</th>
+             <th style="text-align:center;vertical-align:middle;">Description</th>
            </tr>
          </thead>
          <tbody>
@@ -132,9 +133,12 @@
 	                        .append($('<td/>').text(file.fileName))
 	                        .append($('<td/>').text(file.fileSize))
 	                        .append($('<td/>').text(file.fileType))
-	                        .append($('<td/>').html("<a href='${pageContext.request.contextPath}/controller/get/"+index+"'>Click</a>"))
+	                        .append($('<td/>').html(""/*"<a href='${pageContext.request.contextPath}/controller/get/"+index+"'>Click</a>"*/))
 	                        )//end $("#uploaded-files").append()
-	            }); 
+	            });
+	            
+	            searchAllProjects();
+	            drawTreeView();
 	        },
 	 
 	        progressall: function (e, data) {
@@ -152,6 +156,19 @@
 	    
 	    return;
 	});
+ 
+ 	createCheckedIcon = function(input, centered){
+ 		var icon = "glyphicon glyphicon-unchecked";
+		if(input){
+			icon = "glyphicon glyphicon-check";
+		}
+		var style = "";
+		if(centered){
+			style = "margin: 0 auto; width:25%;";
+		}
+		
+		return $("<div style='" + style + "'><i class='" + icon + "'></i></div>");
+ 	}
  
  	searchAllProjects = function(){
  		$.ajax({ // ajax call starts
@@ -184,10 +201,10 @@
 		 	        			var td3 = $("<td></td>").append(column.name);
 		 	        			var td4 = $("<td></td>").append(column.type);
 		 	        			var td5 = $("<td></td>").append(column.size);
-		 	        			var td6 = $("<td></td>").append(column.unique);
-		 	        			var td7 = $("<td></td>").append(column.nullable);
-		 	        			var td8 = $("<td></td>").append(column.pk);
-		 	        			var td9 = $("<td></td>").append(column.fk);
+		 	        			var td6 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.unique, true));
+		 	        			var td7 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.nullable, true));
+		 	        			var td8 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.pk, false));
+		 	        			var td9 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.fk, false));
 		 	        			var td10 = $("<td></td>").append(column.description);
 								var clazz = ""
 								if(counter%2 != 0){
