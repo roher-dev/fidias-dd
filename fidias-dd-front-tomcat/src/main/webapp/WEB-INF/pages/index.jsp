@@ -189,16 +189,15 @@
 		 	        			var td8 = $("<td></td>").append(column.pk);
 		 	        			var td9 = $("<td></td>").append(column.fk);
 		 	        			var td10 = $("<td></td>").append(column.description);
-								//console.log(td1.html());
 								var clazz = ""
 								if(counter%2 != 0){
 									clazz = "success";
 								}
 		 	        			var tr = $("<tr class=\"" + clazz + "\"></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8).append(td9).append(td10);
 								tbody.append(tr); 	
-								console.log(tr.html());
 		 	        			counter++;
-	 	        				return;
+
+		 	        			return;
 	 	        			})
  	        				return;
  	        			})
