@@ -229,7 +229,9 @@
  		return;
  	}
  
- 
+ 	showInfoUpload = function(elemento){
+ 		//$(this)
+ 	}
  
  </script>
  <script>
