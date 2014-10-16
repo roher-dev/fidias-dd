@@ -74,18 +74,6 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.despegar.library</groupId>
-			<artifactId>routing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.despegar.library</groupId>
-			<artifactId>version</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.despegar.library</groupId>
-			<artifactId>logging</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
