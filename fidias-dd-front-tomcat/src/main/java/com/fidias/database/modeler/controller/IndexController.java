@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -21,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fidias.database.modeler.api.dto.FileMeta;
+import com.fidias.database.modeler.api.dto.FileResponseDto;
 import com.fidias.database.modeler.api.dto.ProjectDto;
+import com.fidias.database.modeler.api.dto.ProjectResponseDto;
 import com.fidias.database.modeler.service.ProjectService;
 import com.fidias.database.modeler.xml.element.ProjectElement;
 import com.fidias.database.modeler.xml.processor.ProjectXmlProcessor;
@@ -73,7 +76,7 @@ public class IndexController extends ExceptionHandlingController {
     }
 	*/
 	@RequestMapping(value="/upload2", method = RequestMethod.POST)
-    public @ResponseBody LinkedList<FileMeta> upload2(MultipartHttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody FileResponseDto upload2(MultipartHttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("uploading...");
 		LinkedList<FileMeta> files = new LinkedList<FileMeta>();
 	    FileMeta fileMeta = null;
@@ -117,7 +120,7 @@ public class IndexController extends ExceptionHandlingController {
          }
         // result will be like this
         // [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
-        return files;
+        return new FileResponseDto(files);
     }
     /***************************************************
      * URL: /rest/controller/get/{value}
@@ -143,6 +146,24 @@ public class IndexController extends ExceptionHandlingController {
 	@Override
 	protected Logger getOwnLogger() {
 		return LOGGER;
+	}
+
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
+	public ProjectResponseDto getProjects(@PathVariable String id, HttpServletResponse response){
+		ProjectResponseDto dto = new ProjectResponseDto();
+		
+		if(StringUtils.isNotBlank(id)){
+			String[] parts = StringUtils.split(id, "_");
+			String type = parts[0];
+			Long identifier = Long.valueOf(parts[1]);
+			List<ProjectDto> projects = this.projectService.searchByidType(type, identifier);
+			if(projects != null){
+				dto.setProjectList(projects);
+			}
+		}
+		response.setStatus(HttpServletResponse.SC_OK);
+		
+		return dto;
 	}
 	
 }

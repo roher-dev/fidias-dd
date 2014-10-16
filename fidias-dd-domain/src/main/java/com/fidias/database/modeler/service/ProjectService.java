@@ -11,4 +11,5 @@ public interface ProjectService extends BasicService {
 
 	List<ProjectDto> searchAll();
 	
+	List<ProjectDto> searchByidType(String type, Long id);
 }

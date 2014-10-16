@@ -17,6 +17,7 @@ public class ColumnDtoModelTransformer extends AbstractDtoModelTransformer<Table
 	@Override
 	protected TableColumnDto doTransform(ColumnTable e, int depth) {
 		TableColumnDto dto = new TableColumnDto();
+		dto.setId(e.getId());
 		dto.setDescription(e.getDescription());
 		dto.setFk(e.isFk());
 		dto.setName(e.getName());

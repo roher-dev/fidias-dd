@@ -71,7 +71,7 @@ public abstract class ExceptionHandlingController {
 						+ ce.getSQLException().getMessage(), exception);
 
 		BasicOutputDto dto = new BasicOutputDto(BasicOutputType.SQL_CONSTRAINT_ERROR.getId());
-		dto.setMessage(String.format("An unhandled constraint violation error has ocurred on FIDIAS DD. SQLState: %s", 
+		dto.setMessage(String.format("Se ha producido un error de clave duplicada al querer insertar el proyecto. FIDIAS DDM. SQLState: %s", 
 				ce.getSQLState()));
 		dto.addCause(ce.getSQLException().getMessage());
 

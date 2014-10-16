@@ -20,8 +20,8 @@
   </ul>
 </div>
 -->
-<div class="col-md-2 sidebar" style="overflow:scroll;">
-	<div id="jstree-div" class="hide">
+<div class="col-md-2 sidebar" style="overflow-x:scroll;">
+	<div id="jstree-div">
 		<ul>
 			<li data-jstree='{"icon":"fa fa-database"}'>schema01
 				<ul>
@@ -52,7 +52,7 @@
 <script>
 	$(document).ready(
 		function(){
-			
+			$("#jstree-div").hide();
 			drawTreeView();
 
 			return;
@@ -60,6 +60,7 @@
 	);
 	
 	initTreeView = function(){
+		
 		$("#jstree-div").jstree(
 			{
 				"core" : {
@@ -89,6 +90,7 @@
  	        success: function(data){
  	        	
  	        	var branches = $("#jstree-div > ul");
+ 	        	$("#jstree-div").jstree('destroy');
  	        	if(branches.size() > 0){
  	        		branches.remove();
  	        	}
@@ -100,7 +102,7 @@
 						var counter = 0;
  	        			var project = elem;
 	 	        		
- 	        			var liProj = $("<li data-jstree='{\"icon\":\"fa fa-database\"}'>" + project.name + "</li>");
+ 	        			var liProj = $("<li id='proj_" + project.id + "' data-jstree='{\"icon\":\"fa fa-database\"}'>" + project.name + "</li>");
  	        			
  	        			$.each(project.tables, function(idx, elem){
  	        				
@@ -108,7 +110,7 @@
  	        				
  	        				var ulTable = $("<ul></ul>");
  	        				
-	 	        			var liTable = $("<li data-jstree='{\"icon\":\"fa fa-cubes\"}'>" + table.name + "</li>");
+	 	        			var liTable = $("<li id='table_" + table.id + "' data-jstree='{\"icon\":\"fa fa-cubes\"}'>" + table.name + "</li>");
 	 	        			
 	 	        			$.each(table.columns, function(idx, elem){
 	 	        				
@@ -116,7 +118,7 @@
 	 	        		
 	 	        				var ulColumn = $("<ul></ul>");
 	 	        				
-	 	        				var li1 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.name);
+	 	        				var li1 = $("<li id='column_" + column.id + "' data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.name);
 		 	        			/*
 	 	        				var li2 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.type);
 		 	        			var li3 = $("<li data-jstree='{\"icon\":\"fa fa-cube\"}'></li>").append(column.size);
@@ -145,12 +147,12 @@
  	        			
  	        			return;
  	        		});
-	       			
+	 	        	
  	        		var treeDiv = $("#jstree-div").append(ulGral);
 	 	        	
 	 	        	initTreeView();
 	 	        	
-	 	        	treeDiv.removeClass("hide");
+	 	        	treeDiv.show();
  	        	}
 				
  	            return;

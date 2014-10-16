@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 public class Project extends Identifiable {
 
 	private static final long serialVersionUID = 1L;
-	@Column(name = "NAME", length = 100)
+	@Column(name = "NAME", length = 100, unique = true)
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<ProjectTable> tables = Lists.newArrayList();

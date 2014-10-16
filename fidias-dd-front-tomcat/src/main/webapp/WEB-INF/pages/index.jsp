@@ -26,8 +26,11 @@
 }
 </style>
 
-
    <div class="col-md-10 col-md-offset-2 main">
+			<div id="errorContainer" class="alert alert-danger alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			  <strong>Warning!&nbsp;</strong><span></span>
+			</div>
 	     	<div class="panel panel-default">
 		     	<div class="panel-heading">
 		            <a id="aInfoUpload" href="#"><i class="fa fa-info-circle fa-3 pull-right"></i></a>
@@ -60,30 +63,8 @@
 			        </tr>
 			    </table>
 		     </div>
-		        
-		        <!--
-			        <form action="${pageContext.request.contextPath}/upload.html" method="POST" enctype="multipart/form-data">
-
-				    <span class="btn btn-success fileinput-button">
-				        <i class="glyphicon glyphicon-plus"></i>
-				        <span>Select files...</span>
-				        <input id="fileupload" type="file" name="files[]" multiple>
-				    </span>
-				    <br>
-				    <br>
-				    <div id="progress" class="progress">
-				        <div class="progress-bar progress-bar-success"></div>
-				    </div>
-				    <div id="files" class="files"></div>
-				    <br>
-					<input type="submit" value="Upload" class="btn btn-default">		        
-		         </form>
-		        
-		        -->
-		        
-				 
 		        </div>
-		        <div id="infoUpload" class="panel panel-default" style="position:absolute;top:4%;left:35%;z-index:10000;">
+		        <div id="infoUpload" class="panel panel-warning" style="position:absolute;top:4%;left:35%;z-index:10000;">
 			        <div class="panel-heading">
 			            <h3 class="panel-title">Notes</h3>
 			        </div>
@@ -91,7 +72,7 @@
 			            <ul>
 			                <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
 			                <li>Only extensible markup files (<strong>XML</strong>) are allowed in this application.</li>
-			                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
+			                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support" target="_blank">Browser support</a>).</li>
 			            </ul>
 			        </div>
 			    </div>
@@ -122,6 +103,7 @@
    </div>
  <script>
  $(function () {
+	 $("#errorContainer").hide();
 	 $("#tableFiles").hide();
 	 $("#infoUpload").hide();
 	    $('#fileupload').fileupload({
@@ -129,16 +111,23 @@
 	 
 	        done: function (e, data) {
 	            $("tr:has(td)").remove();
-	            $.each(data.result, function (index, file) {
-	 
-	                $("#uploaded-files").append(
-	                        $('<tr/>')
-	                        .append($('<td/>').text(file.fileName))
-	                        .append($('<td/>').text(file.fileSize))
-	                        .append($('<td/>').text(file.fileType))
-	                        .append($('<td/>').html(""/*"<a href='${pageContext.request.contextPath}/controller/get/"+index+"'>Click</a>"*/))
-	                        )//end $("#uploaded-files").append()
-	            });
+	            if(data.result.status != 0){
+		            $("#errorContainer > span").html(data.result.message);
+		            $("#errorContainer").show();
+	            } else {
+	            	$("#errorContainer").hide();
+	            	$("#errorContainer > span").html();
+		            $.each(data.result.files, function (index, file) {
+		 
+		                $("#uploaded-files").append(
+		                        $('<tr/>')
+		                        .append($('<td/>').text(file.fileName))
+		                        .append($('<td/>').text(file.fileSize))
+		                        .append($('<td/>').text(file.fileType))
+		                        .append($('<td/>').html(""/*"<a href='${pageContext.request.contextPath}/controller/get/"+index+"'>Click</a>"*/))
+		                        )//end $("#uploaded-files").append()
+		            });
+	            }
 	            
 	            searchAllProjects();
 	            drawTreeView();
@@ -158,16 +147,14 @@
 	    
 	    searchAllProjects();
 	    
-	    
-	    
 	    $("#aInfoUpload").click(
 	    	function(){
 	    		if(clicked){
 	    			clicked = false;
-	    			$("#infoUpload").hide();
+	    			$("#infoUpload").hide('slow');
 	    		} else {
 		    		clicked = true;
-		    		$("#infoUpload").show();
+		    		$("#infoUpload").show('slow');
 	    			
 	    		}
 	    		

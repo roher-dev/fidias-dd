@@ -4,6 +4,7 @@ public class TableColumnDto extends BasicDto {
 
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private String name;
 	private String type;
 	private int size;
@@ -79,6 +80,14 @@ public class TableColumnDto extends BasicDto {
 
 	public void setUnique(boolean unique) {
 		this.unique = unique;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

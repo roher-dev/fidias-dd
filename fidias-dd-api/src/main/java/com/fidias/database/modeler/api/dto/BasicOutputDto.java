@@ -49,6 +49,7 @@ public class BasicOutputDto extends BasicDto {
 	
 	public BasicOutputDto() {
 		super();
+		this.status = BasicOutputType.OK.getId();
 	}
 	
 	public BasicOutputDto(Integer status) {

@@ -8,6 +8,7 @@ public class ProjectTableDto extends BasicDto {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	private String name;
 	
 	private List<TableColumnDto> columns = Lists.newArrayList();
@@ -30,6 +31,14 @@ public class ProjectTableDto extends BasicDto {
 
 	public void setColumns(List<TableColumnDto> columns) {
 		this.columns = columns;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

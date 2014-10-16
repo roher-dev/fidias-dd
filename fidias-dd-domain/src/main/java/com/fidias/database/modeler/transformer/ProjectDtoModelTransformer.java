@@ -27,6 +27,7 @@ public class ProjectDtoModelTransformer extends AbstractDtoModelTransformer<Proj
 	@Override
 	protected ProjectDto doTransform(Project e, int depth) {
 		ProjectDto dto = new ProjectDto();
+		dto.setId(e.getId());
 		dto.setName(e.getName());
 		dto.setTables(this.tableDtoModelTransformer.transformAllTo(e.getTables()));
 		

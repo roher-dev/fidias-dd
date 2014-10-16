@@ -28,6 +28,7 @@ public class TableDtoModelTransformer extends
 	@Override
 	protected ProjectTableDto doTransform(ProjectTable e, int depth) {
 		ProjectTableDto dto = new ProjectTableDto();
+		dto.setId(e.getId());
 		dto.setName(e.getName());
 		dto.setColumns(this.columnDtoModelTransformer.transformAllTo(e.getColumns()));
 		

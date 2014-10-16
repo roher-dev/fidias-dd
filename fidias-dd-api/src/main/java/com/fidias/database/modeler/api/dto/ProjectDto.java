@@ -8,6 +8,7 @@ public class ProjectDto extends BasicOutputDto {
 
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private String name;
 	
 	private List<ProjectTableDto> tables = Lists.newArrayList();
@@ -26,6 +27,14 @@ public class ProjectDto extends BasicOutputDto {
 
 	public void setTables(List<ProjectTableDto> tables) {
 		this.tables = tables;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }
