@@ -28,23 +28,34 @@
 
    <div class="col-md-10 col-md-offset-2 main">
 			<div id="errorContainer" class="alert alert-danger alert-dismissible" role="alert">
-			  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			  <strong>Warning!&nbsp;</strong><span></span>
+			  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+			  <strong>Cuidado!&nbsp;</strong><span></span>
 			</div>
+			<div class="panel panel-default">
+		     	<div class="panel-heading">
+		     		<h4 class="panel-title">Filtro</h4>
+		     	</div>
+		     	<div class="panel-body">
+		     		<div class="input-group input-group-sm">
+						<input id="projectSearch" type="text" class="form-control" placeholder="Buscar...">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+					</div>
+		     	</div>
+		    </div>
 	     	<div class="panel panel-default">
 		     	<div class="panel-heading">
 		            <a id="aInfoUpload" href="#"><i class="fa fa-info-circle fa-3 pull-right"></i></a>
-		            <h3 class="panel-title">Upload File</h3>
+		            <h4 class="panel-title">Subir Archivo</h4>
 		        </div>
 		        <div class="panel-body">
 		        <span class="btn btn-success fileinput-button">
 				        <i class="glyphicon glyphicon-plus"></i>
-				        <span>Select files...</span>
+				        <span>Seleccionar archivos...</span>
 				        <input id="fileupload" type="file" name="files[]" data-url="${pageContext.request.contextPath}/controller/upload2" multiple>
 				    </span>
 		        <!-- <input id="fileupload" type="file" name="files[]" data-url="${pageContext.request.contextPath}/controller/upload2" multiple> -->
  
-			    <div id="dropzone">Drop files here</div>
+			    <div id="dropzone">Drop files here ...</div>
 			 <!-- 
 			    <div id="progress">
 			        <div style="width: 0%;"></div>
@@ -66,40 +77,45 @@
 		        </div>
 		        <div id="infoUpload" class="panel panel-warning" style="position:absolute;top:4%;left:35%;z-index:10000;">
 			        <div class="panel-heading">
-			            <h3 class="panel-title">Notes</h3>
+			            <h3 class="panel-title">Informaci&oacute;n</h3>
 			        </div>
 			        <div class="panel-body">
 			            <ul>
-			                <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-			                <li>Only extensible markup files (<strong>XML</strong>) are allowed in this application.</li>
-			                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support" target="_blank">Browser support</a>).</li>
+			                <li>El tama&ntilde;o m&aacute;ximo de un archivo permitido es de <strong>5 MB</strong>.</li>
+			                <li>La extensi&oacute;n de archivo permitida a subir es "extensible markup files" (<strong>XML</strong>).</li>
+			                <li>Tambi&eacute;n se puede hacer mediante <strong>drag &amp; drop</strong> el upload de archivos desde su escritorio.</li>
 			            </ul>
 			        </div>
 			    </div>
 	    </div>   
-	         
-	
-     <h2 class="sub-header">Search's Results</h2>
-     <div class="table-responsive">
-       <table id="projects-table-result" class="table table-bordered">
-         <thead>
-           <tr class="active">
-             <th style="text-align:center;vertical-align:middle;">Project-Name</th>
-             <th style="text-align:center;vertical-align:middle;">Table-Name</th>
-             <th style="text-align:center;vertical-align:middle;">Column-Name</th>
-             <th style="text-align:center;vertical-align:middle;">Type</th>
-             <th style="text-align:center;vertical-align:middle;">Size</th>
-             <th style="text-align:center;vertical-align:middle;">Unique</th>
-             <th style="text-align:center;vertical-align:middle;">Null</th>
-             <th style="text-align:center;vertical-align:middle;">Pk</th>
-             <th style="text-align:center;vertical-align:middle;">Fk</th>
-             <th style="text-align:center;vertical-align:middle;">Description</th>
-           </tr>
-         </thead>
-         <tbody>
-         </tbody>
-       </table>
+	    <div class="panel panel-default">
+	     	<div class="panel-heading">
+	     		<h4 class="panel-title">Resultado de la b&uacute;squeda</h4>
+	     	</div>
+	     	<div class="panel-body">
+	     		<div class="table-responsive">
+			       <table id="projects-table-result" class="table table-bordered">
+			         <thead>
+			           <tr class="active">
+			             <th style="text-align:center;vertical-align:middle;">Projecto</th>
+			             <th style="text-align:center;vertical-align:middle;">Tabla</th>
+			             <th style="text-align:center;vertical-align:middle;">Nombre Columna</th>
+			             <th style="text-align:center;vertical-align:middle;">Tipo</th>
+			             <th style="text-align:center;vertical-align:middle;">Tama&ntilde;o</th>
+			             <th style="text-align:center;vertical-align:middle;">Unique</th>
+			             <th style="text-align:center;vertical-align:middle;">Nullable</th>
+			             <th style="text-align:center;vertical-align:middle;">Pk</th>
+			             <th style="text-align:center;vertical-align:middle;">Fk</th>
+			             <th style="text-align:center;vertical-align:middle;">Descripci&oacute;n</th>
+			           </tr>
+			         </thead>
+			         <tbody>
+			         </tbody>
+			       </table>
      </div>
+	     	</div>
+	    </div>
+     
    </div>
  <script>
  $(function () {
@@ -117,15 +133,23 @@
 	            } else {
 	            	$("#errorContainer").hide();
 	            	$("#errorContainer > span").html();
+	            	
+	            	var uploadDiv = $("#uploaded-files");
+	            	
 		            $.each(data.result.files, function (index, file) {
 		 
-		                $("#uploaded-files").append(
-		                        $('<tr/>')
-		                        .append($('<td/>').text(file.fileName))
-		                        .append($('<td/>').text(file.fileSize))
-		                        .append($('<td/>').text(file.fileType))
-		                        .append($('<td/>').html(""/*"<a href='${pageContext.request.contextPath}/controller/get/"+index+"'>Click</a>"*/))
-		                        )//end $("#uploaded-files").append()
+		            	var tr = $("<tr></tr>")
+		            	
+		            	var td1 = $("<td></td>").append(file.fileName);
+		            	var td2 = $("<td></td>").append(file.fileSize);
+		            	var td3 = $("<td></td>").append(file.fileType);
+		            	var td4 = $("<td></td>");
+		            	
+		            	tr.append(td1).append(td2).append(td3).append(td4);
+		            	
+		            	uploadDiv.append(tr);
+		            	
+		            	return;
 		            });
 	            }
 	            
@@ -168,6 +192,45 @@
 	    	}		
 	    )*/;
 	    
+	    $("#projectSearch").autocomplete({
+	      source: function( request, response ) {
+	          $.ajax({
+	            url: '${pageContext.request.contextPath}/controller/projects/filter/' + request.term,// "http://gd.geobytes.com/AutoCompleteCity",
+	            data: {
+	              q: request.term
+	            },
+	            success: function( data ) {
+	              response( data.list );
+	            }
+	          });
+	        },
+	        minLength: 3,
+	        select: function( event, ui ) {
+	          console.log( ui.item ?
+	            "Selected: " + ui.item.label :
+	            "Nothing selected, input was " + this.value);
+	          
+	          if(ui.item != null && ui.item !== 'undefined'){
+		          $.ajax({ // ajax call starts
+						url: '${pageContext.request.contextPath}/controller/projects/get/' + ui.item.label,
+			 	        dataType: 'json', // Choosing a JSON datatype
+			 	        success: function(data){
+			 	        	
+			 	        	drawProjects(data);
+							
+			 	            return;
+			 	        }
+			 	    });	
+	          }
+	        },
+	        open: function() {
+	          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+	        },
+	        close: function() {
+	          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+	        }
+	      });
+	    
 	    return;
 	});
  
@@ -203,7 +266,6 @@
 						var counter = 0;
  	        			var project = elem;
  	        			
- 	        			
  	        			$.each(project.tables, function(idx, elem){
  	        				
  	        				var table = elem;
@@ -236,6 +298,9 @@
  	        			})
  	        			return;
  	        		});
+ 	        	} else {
+ 	        		var tr = $("<tr class=\"\"></tr>").append("<td style='text-align:center;' colspan='10'>No se han encontrado resultados</td>")
+ 	        		tbody.append(tr);
  	        	}
 				
  	            return;

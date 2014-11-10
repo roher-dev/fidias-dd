@@ -25,13 +25,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/public/font-awesome-4.2.0/css/font-awesome.min.css" />
 
 <!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/public/css/blueimp-gallery.min.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-fileupload/css/jquery.fileupload.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-fileupload/css/jquery.fileupload-ui.css">
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-fileupload/css/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-fileupload/css/jquery.fileupload-ui-noscript.css"></noscript>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/public/jquery-ui/jquery-ui.theme.min.css">
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -80,5 +83,6 @@
 	<!-- <script src="${pageContext.request.contextPath}/public/jquery-fileupload/js/jquery.fileupload-validate.js"></script> -->
 	<!-- The File Upload user interface plugin -->
 	<!-- <script src="${pageContext.request.contextPath}/public/jquery-fileupload/js/jquery.fileupload-ui.js"></script> -->
+	<script src="${pageContext.request.contextPath}/public/jquery-ui/jquery-ui.min.js"></script>
 </body>
 </html>

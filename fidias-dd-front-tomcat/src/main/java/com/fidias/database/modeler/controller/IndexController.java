@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.fidias.database.modeler.api.dto.AutoCompleteResponseDto;
+import com.fidias.database.modeler.api.dto.BasicOutputDto;
 import com.fidias.database.modeler.api.dto.FileMeta;
 import com.fidias.database.modeler.api.dto.FileResponseDto;
 import com.fidias.database.modeler.api.dto.ProjectDto;
@@ -148,8 +151,8 @@ public class IndexController extends ExceptionHandlingController {
 		return LOGGER;
 	}
 
-	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
-	public ProjectResponseDto getProjects(@PathVariable String id, HttpServletResponse response){
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ProjectResponseDto getProjects(@PathVariable String id, HttpServletResponse response){
 		ProjectResponseDto dto = new ProjectResponseDto();
 		
 		if(StringUtils.isNotBlank(id)){
@@ -159,6 +162,53 @@ public class IndexController extends ExceptionHandlingController {
 			List<ProjectDto> projects = this.projectService.searchByidType(type, identifier);
 			if(projects != null){
 				dto.setProjectList(projects);
+			}
+		}
+		response.setStatus(HttpServletResponse.SC_OK);
+		
+		return dto;
+	}
+	
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody BasicOutputDto deleteProject(@PathVariable String id, 
+			HttpServletResponse response){
+		
+		if(StringUtils.isNotBlank(id)){
+			String[] parts = StringUtils.split(id, "_");
+			Long identifier = Long.valueOf(parts[1]);
+			this.projectService.remove(identifier);
+		}
+		
+		return new BasicOutputDto(0);
+	}
+
+	@RequestMapping(value = "/projects/filter/{query}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody AutoCompleteResponseDto filterProjects(@PathVariable String query, HttpServletResponse response){
+		AutoCompleteResponseDto dto = new AutoCompleteResponseDto();
+		
+		if(StringUtils.isNotBlank(query)){
+			List<ProjectDto> projects = this.projectService.searchByNameLike(query);
+			if(projects != null){
+				for(ProjectDto d : projects){
+					dto.addElement(d.getName());
+				}
+			}
+		}
+		response.setStatus(HttpServletResponse.SC_OK);
+		
+		return dto;
+	}
+	
+	@RequestMapping(value = "/projects/get/{name}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ProjectResponseDto getProjectsByName(@PathVariable String name, HttpServletResponse response){
+		ProjectResponseDto dto = new ProjectResponseDto();
+		
+		if(StringUtils.isNotBlank(name)){
+			List<ProjectDto> projects = this.projectService.searchByName(name);
+			if(projects != null){
+				for(ProjectDto d : projects){
+					dto.addProject(d);
+				}
 			}
 		}
 		response.setStatus(HttpServletResponse.SC_OK);

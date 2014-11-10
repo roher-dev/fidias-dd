@@ -20,7 +20,7 @@
   </ul>
 </div>
 -->
-<div class="col-md-2 sidebar" style="overflow-x:scroll;">
+<div class="col-md-2 sidebar hidden-xs hidden-sm" style="overflow-x:scroll;">
 	<div id="jstree-div">
 		<ul>
 			<li data-jstree='{"icon":"fa fa-database"}'>schema01
@@ -69,17 +69,78 @@
 				      "variant" : "large"
 				      */
 				    }
-				  },
+				  },/*
 				  "checkbox" : {
 				    "keep_selected_style" : false
-				  },
-				  "plugins" : [ "wholerow", "checkbox" ]
+				  },*/
+				  "plugins" : [ "wholerow"/*, "checkbox"*/ ]
 			}		
 		);
 		$('#jstree-div').on("changed.jstree", function (e, data) {
-		  console.log(data.selected);
+			
+			$.ajax({ // ajax call starts
+				url: '${pageContext.request.contextPath}/controller/projects/' + data.selected, // JQuery loads serverside.php
+	 	        dataType: 'json', // Choosing a JSON datatype
+	 	        success: function(data){
+	 	        	
+	 	        	drawProjects(data);
+					
+	 	            return;
+	 	        }
+	 	    });	
 		});
 			
+		return;
+	}
+	
+	drawProjects = function(data){
+		
+		if(data.status == 0){
+     		var tr = $("#projects-table-result > tbody > tr");
+				if(tr.size() > 0){
+					
+					tr.remove();
+				}
+     		
+     		var tbody = $("#projects-table-result > tbody");
+     		
+     		for(var i=0;i<data.projectList.length;i++){
+     			var counter = 0;
+     			var project = data.projectList[i];
+     		
+     			for(var j=0;j<project.tables.length;j++){
+     				var table = project.tables[j];
+     				
+     				for(var k=0;k<table.columns.length;k++){
+     					
+     					var column = table.columns[k];
+     					
+     					var td1 = $("<td></td>").append(project.name);
+ 	        			var td2 = $("<td></td>").append(table.name);
+ 	        			var td3 = $("<td></td>").append(column.name);
+ 	        			var td4 = $("<td></td>").append(column.type);
+ 	        			var td5 = $("<td></td>").append(column.size);
+ 	        			var td6 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.unique, true));
+ 	        			var td7 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.nullable, true));
+ 	        			var td8 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.pk, false));
+ 	        			var td9 = $("<td class='col-centered'></td>").append(createCheckedIcon(column.fk, false));
+ 	        			var td10 = $("<td></td>").append(column.description);
+						var clazz = ""
+						if(counter%2 != 0){
+							clazz = "success";
+						}
+ 	        			var tr = $("<tr class=\"" + clazz + "\"></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8).append(td9).append(td10);
+						tbody.append(tr); 	
+ 	        			counter++;
+     					
+     				}
+     				
+     			}
+     		}	 	        		
+     		
+     		
+     	}
+		
 		return;
 	}
 	
@@ -153,6 +214,12 @@
 	 	        	initTreeView();
 	 	        	
 	 	        	treeDiv.show();
+ 	        	} else {
+// 	        		$("#jstree-div").append("<ul></ul>").append("<li data-jstree='{\"icon\":\"fa fa-database\"}'>No data content</li>");
+ 	        		
+//					initTreeView();
+	 	        	
+	//				$("#jstree-div").show();
  	        	}
 				
  	            return;

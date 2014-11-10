@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -24,24 +25,18 @@ public class ProjectDaoImpl extends BasicIdentificableDaoImpl<Project>
 	public List<Project> getProjects(String type, Long id) {
 		Criteria criteria = this.getCurrentSession().createCriteria(this.getEntityClass());
 
-		switch(type){
-		case "proj":
+		if(StringUtils.equals(type, "proj")){
 			criteria.add(Restrictions.eq("id", id));
-
-			break;
-		case "table":
+		} else if(StringUtils.equals(type, "table")){
 			criteria.createAlias("tables", "table");
 			criteria.add(Restrictions.eq("table.id", id));
-
-			break;
-		case "column":
+		} else if(StringUtils.equals(type, "column")){
 			criteria.createAlias("tables", "table").createAlias("table.columns", "column");
 			criteria.add(Restrictions.eq("column.id", id));
-			break;
-		default:
+		} else {
 			throw new NotImplementedException("this option was not implemented.");
 		}
-			
+		
 		return criteria.list();
 	}
 
